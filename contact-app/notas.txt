@@ -1,0 +1,6 @@
+rails g migration AddNameToFiles file_name
+
+rails destroy model simplefile
+
+rails g model simplefile file_uid:string file_name:string title:string type:string extension:string
+

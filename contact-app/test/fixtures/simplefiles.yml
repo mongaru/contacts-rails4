@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  simplefile_uid: MyString
+  simplefile_name: MyString
+  title: MyString
+  type: 
+  extension: MyString
+
+two:
+  simplefile_uid: MyString
+  simplefile_name: MyString
+  title: MyString
+  type: 
+  extension: MyString
