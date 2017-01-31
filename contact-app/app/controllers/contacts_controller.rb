@@ -11,6 +11,7 @@ class ContactsController < ApplicationController
   # GET /contacts/1
   # GET /contacts/1.json
   def show
+    @detail = Detail.new
   end
 
   # GET /contacts/new
@@ -29,15 +30,17 @@ class ContactsController < ApplicationController
 
     respond_to do |format|
       if @contact.save
-        
-        @photo = Simplefile.new(simplefile_params)
-        if @photo.save
-          @contact.simplefile = @photo
+        if simplefile_params["simplefile"]
+          @photo = Simplefile.new(simplefile_params)
+          @photo.title = contact_params["nombre"]
+          if @photo.save
+            @contact.simplefile = @photo
+          end          
+          @contact.save
         end
-        
-        @contact.save
 
-        format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
+        # format.html { redirect_to @contact, notice: 'Contact was successfully created.' }
+        format.html { redirect_to "/contacts/new", notice: 'Contact was successfully created.' }
         format.json { render :show, status: :created, location: @contact }
       else
         format.html { render :new }
@@ -51,6 +54,16 @@ class ContactsController < ApplicationController
   def update
     respond_to do |format|
       if @contact.update(contact_params)
+
+        if simplefile_params["simplefile"]
+          @photo = Simplefile.new(simplefile_params)
+          @photo.title = contact_params["nombre"]
+          if @photo.save
+            @contact.simplefile = @photo
+          end          
+          @contact.save
+        end
+
         format.html { redirect_to @contact, notice: 'Contact was successfully updated.' }
         format.json { render :show, status: :ok, location: @contact }
       else

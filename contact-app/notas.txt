@@ -4,3 +4,6 @@ rails destroy model simplefile
 
 rails g model simplefile file_uid:string file_name:string title:string type:string extension:string
 
+<%= image_tag @contact.simplefile.simplefile.thumb('400x200#').url if @contact.simplefile.simplefile_stored? %>
+
+rails g model detail name:string content:string contact:belongs_to

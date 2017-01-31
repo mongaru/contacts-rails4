@@ -1,4 +1,4 @@
-class FilesController < ApplicationController
+class SimplefilesController < ApplicationController
     def new
         @photo = Simplefile.new
     end
@@ -11,5 +11,11 @@ class FilesController < ApplicationController
         else
         render 'new'
         end
+    end
+
+    private
+
+    def photo_params
+        params.require(:simplefile).permit(:simplefile, :title)
     end
 end

@@ -22,7 +22,11 @@ Rails.application.routes.draw do
   
   resources :contacts
 
-  # resources :simplefile, only: [:new, :create, :index]
+    # get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
+
+  resources :simplefiles, only: [:new, :create]
+
+  resources :details, only: [:new, :create, :destroy]
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

@@ -1,4 +1,8 @@
 class Simplefile < ActiveRecord::Base
-    attr_accessor :simplefile, :title
+    dragonfly_accessor :simplefile
+    
+    # validates_presence_of :simplefile
+    
+    # attr_accessor :simplefile, :title
 
 end

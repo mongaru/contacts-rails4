@@ -1,34 +1,106 @@
-<p id="notice"><%= notice %></p>
+<div class="container">
 
-<p>
-  <strong>Nombre:</strong>
-  <%= @contact.nombre %>
-</p>
+    <h1 id="helper-classes" class="page-header">View Contact</h1>
 
-<p>
-  <strong>Apellido:</strong>
-  <%= @contact.apellido %>
-</p>
+    <%= link_to 'Go Back', contacts_path, :class => "btn btn-info" %> |
+    <%= link_to 'Edit', edit_contact_path(@contact), :class => "btn btn-warning" %>
 
-<p>
-  <strong>Apodo:</strong>
-  <%= @contact.apodo %>
-</p>
+    <table class="table table-bordered table-striped">
+      <tbody>
+        <tr>
+          <th width="200">Nombre</th>
+          <td><%= @contact.nombre %></td>
+        </tr>
+        <tr>
+          <th width="200">Apellido</th>
+          <td><%= @contact.apellido %></td>
+        </tr>
+        <tr>
+          <th width="200">Apodo</th>
+          <td><%= @contact.apodo %></td>
+        </tr>
+        <tr>
+          <th width="200">Telefono</th>
+          <td><%= @contact.telefono %></td>
+        </tr>
+        <tr>
+          <th width="200">Email</th>
+          <td><%= @contact.email %></td>
+        </tr>
+        <tr>
+          <th width="200">Direccion</th>
+          <td><%= @contact.direccion %></td>
+        </tr>
+        <tr>
+          <th width="200">Image</th>
+          <td>
+            <% if @contact.simplefile and @contact.simplefile.simplefile_stored? %>
+              <img src="<%= @contact.simplefile.simplefile.url %>" style="width: 200px; height: auto;" />
+            <% end %>
+          </td>
+        </tr>
+      </tbody>
+    </table>
 
-<p>
-  <strong>Telefono:</strong>
-  <%= @contact.telefono %>
-</p>
+    <h1 id="helper-classes" class="page-header">Details</h1>
 
-<p>
-  <strong>Email:</strong>
-  <%= @contact.email %>
-</p>
+    <table class="table table-bordered table-striped">
+      <thead>
+        <tr>
+          <th>Field Type</th>
+          <th>Content</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tbody>
+        <% @contact.details.each do |det| -%>
+          <tr>
+            <th width="200"><%= det.name %></th>
+            <td><%= det.content %></td>
+            <td><%= link_to 'Destroy', det, method: :delete, data: { confirm: 'Are you sure?' }, :class => "btn btn-danger" %></td>
+          </tr>
+        <% end -%>
+      </tbody>
+    </table>
 
-<p>
-  <strong>Direccion:</strong>
-  <%= @contact.direccion %>
-</p>
+    <h1 id="helper-classes" class="page-header">Add Detail</h1>
 
-<%= link_to 'Edit', edit_contact_path(@contact) %> |
-<%= link_to 'Back', contacts_path %>
+    <%= form_for @detail, :html => {:class => 'form-horizontal'} do |f| %>
+      <% if @detail.errors.any? %>
+        <div class="bg-danger col-sm-12">
+            <p><%= pluralize(@detail.errors.count, "error") %> prohibited this detail from being saved:</p>
+            <ul>
+              <% @detail.errors.full_messages.each do |msg| %>
+                <li><%= msg %></li>
+              <% end %>
+            </ul>
+        </div>
+      <% end %>
+
+      <%= f.hidden_field('contact_id', value: @contact.id) %>
+
+      <div class="form-group">
+        <%= f.label :name, :class => "col-sm-2 control-label" %>
+        <div class="col-sm-10">
+          <%= f.select :name, [['Cellphone', 'cellphone'],['Company', 'company']] %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :content, :class => "col-sm-2 control-label" %>
+        <div class="col-sm-10">
+          <%= f.text_field :content, :class => "form-control" %>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+          <%= f.submit :class => "btn btn-primary", :label => "Guardar" %>
+        </div>
+      </div>
+
+    <% end %>
+
+</div>
+
